@@ -1,0 +1,54 @@
+{% extends 'blog/wrapper.html' %}
+{% block title %}NUIDI - Developer Blog{% endblock %}
+{% block content %}
+<div id="index" class="col-xs-12 col-sm-9">
+  {% for post in last_posts|slice:":3" %}
+  <article>
+
+    <header>
+      <h2 class="heading"><a href="{% url 'blog_post' post.slug %}">{{ post.title }}</a></h2>
+      <div class="date">
+        added <strong>{{ post.created|date:"d F Y H:i" }}</strong> by <strong>{{ post.author }}</strong>
+      </div>
+    </header>
+
+    <div class="body">
+
+      <div class="text">
+        {{ post.get_intro|linebreaks}}
+      </div>
+
+      {% if post.tags %}
+      <div  class="tags">
+        <h3>
+          tags:
+          {% for tag in post.split_tags %}
+            <a href="{% url 'blog_tag' tag %}">{{ tag }}</a>
+          {% endfor %}
+        </h3>
+      </div>
+      {% endif %}
+
+      <div class="action-btns">
+        <div class="pull-right">
+          <a href="{% url 'blog_post' post.slug %}" class="btn btn-primary">
+            Read more
+          </a>
+        </div>
+        <div class="clear">
+
+        </div>
+      </div>
+
+    </div>
+
+  </article>
+  {% endfor %}
+</div>
+<div class="col-xs-12 col-sm-3">
+  <div id="sidebar">
+    {% include 'blog/sidebar.html' %}
+  </div>
+</div>
+
+{% endblock %}

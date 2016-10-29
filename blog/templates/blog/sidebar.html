@@ -1,0 +1,16 @@
+<div class="header">
+  Go to
+  <hr />
+</div>
+<p>
+  <a href="/">nuidi.com</a>
+</p>
+<div class="header">
+  Last posts
+  <hr />
+</div>
+<ul class="last_posts">
+{% for post in last_posts %}
+  <li><a href="{% url 'blog_post' post.slug %}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>

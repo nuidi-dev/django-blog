@@ -1,0 +1,86 @@
+{% extends 'blog/wrapper.html' %}
+{% load staticfiles %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block extendhead %}
+{% endblock %}
+{% block content %}
+<div class="col-xs-12 col-sm-12">
+  <article id="neo">
+
+    <header>
+      <h1 class="heading">{{ post.title }}</h1>
+      {% if post.subtitle %}<h2 class="subheading">{{ post.subtitle }}</h2>{% endif %}
+      {% if post.image %}
+      <img id="post_img" src="{{ post.image.url }}" />
+      {% endif %}
+    </header>
+
+    <div class="body">
+
+      <div class="text">
+        {{ post.bb_body|linebreaks }}
+      </div>
+
+      <div class="tags">
+        {% if post.tags %}<h3><strong>tags: </strong>{% for tag in post.split_tags %}<a href="{% url 'blog_tag' tag %}">{{ tag }}</a> {% endfor %}</h3>{% endif %}
+      </div>
+
+      <div class="author">
+        ~ <strong><i>{{ post.author }}</i></strong>
+      </div>
+
+      <div class="action-btns">
+        <div class="pull-left">
+          <a href="{% url 'blog_index' %}" class="btn btn-lg btn-primary">Go back to main page</a>
+        </div>
+      </div>
+
+    </div>
+
+  </article>
+  <div class="clear"></div>
+  <div id="add_comm" class="well">
+    <form action="{% url 'blog_post' post.slug %}" method="POST">
+      {% csrf_token %}
+      <p>
+        Add comment:
+      </p>
+      <p>
+        {{ comment_form.user.label_tag }}<br />
+        {{ comment_form.user }}
+      </p>
+      <p>
+        {{ comment_form.text.label_tag }}<br />
+        {{ comment_form.text }}
+      </p>
+      <p>
+        <button type="submit" class="btn btn-lg btn-primary">Send</button>
+      </p>
+    </form>
+  </div>
+  <div id="comments" name="comments" class="clear"></div>
+  <div>
+    {% for c in comments %}
+    <div class="comment container">
+      <div class="row">
+        <div class="col-xs-12">
+          <hr />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <img src="{% static 'gfx/comm.png' %}" />
+          {{ c.created }}<br />
+          <big><strong>{{ c.user }}</strong></big>
+        </div>
+      </div>
+      <div class="comm_text row">
+        <div class="col-sm-10">
+          {{ c.text }}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
+
+  {% block extendhead %}{% endblock %}
+</head>
+<body>
+
+  <div id="page-head">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="page-title">
+            <a href="{% url 'blog_index' %}">
+              NUIDI: Dev Blog
+            </a>
+          </div>
+          <div class="sub-title">The Stories of Interpreter</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="page-body" class="container">
+    <div class="row">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+  <div id="page-foot">
+    &copy; 2016 <a href="http://nuidi.com">NUIDI.COM</a>
+  </div>
+
+</body>
+</html>

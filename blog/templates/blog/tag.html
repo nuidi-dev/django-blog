@@ -1,0 +1,30 @@
+{% extends 'blog/wrapper.html' %}
+{% block title %}Posts with tag {{ tag }}{% endblock %}
+{% block content %}
+<div id="tag_page" class="col-xs-12 col-sm-12">
+
+  <h1>Found posts with tag {{ tag }}: {{ posts|length }}</h1>
+  <hr />
+  {% for p in posts %}
+  <div class="tag_post">
+
+    <div class="date">{{ p.created }}</div>
+
+    <h2><a href="{% url 'blog_post' p.slug %}">{{ p.title }}</a></h2>
+
+    {% if p.tags %}
+    <div class="tags">
+      <h3>{% for tag in p.split_tags %}<a href="{% url 'blog_tag' tag %}">{{ tag }}</a> {% endfor %}</h3>
+    </div>
+    {% endif %}
+
+    <a class="body" href="{% url 'blog_post' p.slug %}">
+      {{ p.get_intro|linebreaks|truncatewords_html:40 }}
+    </a>
+
+    <hr />
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}
